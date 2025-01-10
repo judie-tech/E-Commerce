@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema({
   street: String,
@@ -6,28 +6,15 @@ const addressSchema = new mongoose.Schema({
   state: String,
   postalCode: String,
   country: String,
-  isDefault: Boolean
+  isDefault: Boolean,
 });
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   addresses: [addressSchema],
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);
