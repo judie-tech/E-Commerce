@@ -1,6 +1,6 @@
 import express from "express";
 import { body, validationResult } from "express-validator";
-import { auth } from "../middleware/auth.js";
+import { authMiddleware } from "../middleware/auth.js";
 import Product from "../models/Product.js";
 
 const router = express.Router();
@@ -56,7 +56,7 @@ router.get("/:id", async (req, res) => {
 // Add review
 router.post(
   "/:id/reviews",
-  auth,
+  authMiddleware,
   [body("rating").isInt({ min: 1, max: 5 }), body("comment").optional().trim()],
   async (req, res) => {
     try {

@@ -1,54 +1,65 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Dumbbell, ShoppingBag, LogOut, User } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { products } from './data/products';
-import { ProductCard } from './components/ProductCard';
-import { Cart } from './components/Cart';
-import { HomePage } from './components/HomePage';
-import { ProductDetails } from './components/ProductDetails';
-import { MpesaPayment } from './components/MpesaPayment';
-import { CardPayment } from './components/CardPayment';
-import { PaymentSelector } from './components/PaymentSelector';
-import { AuthPage } from './components/AuthPage';
-import { PrivateRoute } from './components/PrivateRoute';
-import { ProfilePage } from './components/ProfilePage';
-import { SearchBar } from './components/SearchBar';
-import { Product, CartItem, PaymentMethod } from './types';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Dumbbell, ShoppingBag, LogOut, User } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { products } from "./data/products";
+import { ProductCard } from "./components/ProductCard";
+import { Cart } from "./components/Cart";
+import { HomePage } from "./components/HomePage";
+import { ProductDetails } from "./components/ProductDetails";
+import { MpesaPayment } from "./components/MpesaPayment";
+import { CardPayment } from "./components/CardPayment";
+import { PaymentSelector } from "./components/PaymentSelector";
+import { Login } from "./components/login";
+import { Signup } from "./components/signup";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { ProfilePage } from "./components/ProfilePage";
+import { SearchBar } from "./components/SearchBar";
+import { Product, CartItem, PaymentMethod } from "./types";
 
 function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'gear' | 'trainers' | 'supplements' | 'accessories'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<
+    "all" | "gear" | "trainers" | "supplements" | "accessories"
+  >("all");
   const [showCart, setShowCart] = useState(false);
   const [showPaymentSelector, setShowPaymentSelector] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [priceFilter, setPriceFilter] = useState<{ minPrice: number; maxPrice: number }>({
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
+    null
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [priceFilter, setPriceFilter] = useState<{
+    minPrice: number;
+    maxPrice: number;
+  }>({
     minPrice: 0,
-    maxPrice: Infinity
+    maxPrice: Infinity,
   });
 
   const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    window.location.href = '/';
+    localStorage.removeItem("isAuthenticated");
+    window.location.href = "/";
   };
 
-  const filteredProducts = products
-    .filter(product => {
-      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          product.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesPrice = product.price >= priceFilter.minPrice && 
-                          (priceFilter.maxPrice === Infinity || product.price <= priceFilter.maxPrice);
-      return matchesCategory && matchesSearch && matchesPrice;
-    });
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesPrice =
+      product.price >= priceFilter.minPrice &&
+      (priceFilter.maxPrice === Infinity ||
+        product.price <= priceFilter.maxPrice);
+    return matchesCategory && matchesSearch && matchesPrice;
+  });
 
   const addToCart = (product: Product) => {
-    setCartItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
       if (existing) {
-        return prev.map(item =>
+        return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -59,14 +70,12 @@ function App() {
   };
 
   const removeFromCart = (id: string) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   const updateQuantity = (id: string, quantity: number) => {
-    setCartItems(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, quantity } : item
-      )
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
     );
   };
 
@@ -79,11 +88,14 @@ function App() {
   const handlePaymentSuccess = () => {
     setShowPayment(false);
     setCartItems([]);
-    alert('Payment successful! Thank you for your purchase.');
+    alert("Payment successful! Thank you for your purchase.");
   };
 
-  const cartTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  const cartTotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
 
   return (
     <Router>
@@ -97,10 +109,16 @@ function App() {
                   <h1 className="text-2xl font-bold text-[#7c6c5d]">FitGear</h1>
                 </Link>
                 <nav className="hidden md:flex items-center gap-6">
-                  <Link to="/" className="text-[#7c6c5d] hover:text-[#a69585] transition-colors">
+                  <Link
+                    to="/"
+                    className="text-[#7c6c5d] hover:text-[#a69585] transition-colors"
+                  >
                     Home
                   </Link>
-                  <Link to="/shop" className="text-[#7c6c5d] hover:text-[#a69585] transition-colors">
+                  <Link
+                    to="/shop"
+                    className="text-[#7c6c5d] hover:text-[#a69585] transition-colors"
+                  >
                     Shop
                   </Link>
                 </nav>
@@ -108,7 +126,10 @@ function App() {
               <div className="flex items-center gap-4">
                 {isAuthenticated && (
                   <>
-                    <Link to="/profile" className="text-[#7c6c5d] hover:text-[#a69585] p-2">
+                    <Link
+                      to="/profile"
+                      className="text-[#7c6c5d] hover:text-[#a69585] p-2"
+                    >
                       <User size={24} />
                     </Link>
                     <button
@@ -138,9 +159,9 @@ function App() {
         <AnimatePresence>
           {showCart && (
             <motion.div
-              initial={{ opacity: 0, x: '100%' }}
+              initial={{ opacity: 0, x: "100%" }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: '100%' }}
+              exit={{ opacity: 0, x: "100%" }}
               className="fixed right-0 top-0 h-full w-full md:w-96 bg-white shadow-xl z-50"
             >
               <Cart
@@ -180,7 +201,7 @@ function App() {
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
             >
-              {paymentMethod === 'mpesa' ? (
+              {paymentMethod === "mpesa" ? (
                 <MpesaPayment
                   amount={cartTotal}
                   onSuccess={handlePaymentSuccess}
@@ -199,8 +220,17 @@ function App() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/shop"
             element={
@@ -210,10 +240,16 @@ function App() {
                     onSearch={setSearchQuery}
                     onFilter={setPriceFilter}
                   />
-                  
+
                   <div className="mb-6">
                     <div className="flex flex-wrap gap-4">
-                      {['all', 'gear', 'trainers', 'supplements', 'accessories'].map((category) => (
+                      {[
+                        "all",
+                        "gear",
+                        "trainers",
+                        "supplements",
+                        "accessories",
+                      ].map((category) => (
                         <motion.button
                           key={category}
                           whileHover={{ scale: 1.05 }}
@@ -221,8 +257,8 @@ function App() {
                           onClick={() => setSelectedCategory(category as any)}
                           className={`px-4 py-2 rounded-lg ${
                             selectedCategory === category
-                              ? 'bg-[#7c6c5d] text-white'
-                              : 'bg-white text-[#7c6c5d] hover:bg-[#f5efe6]'
+                              ? "bg-[#7c6c5d] text-white"
+                              : "bg-white text-[#7c6c5d] hover:bg-[#f5efe6]"
                           }`}
                         >
                           {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -232,7 +268,7 @@ function App() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredProducts.map(product => (
+                    {filteredProducts.map((product) => (
                       <motion.div
                         key={product.id}
                         initial={{ opacity: 0, y: 20 }}
@@ -254,10 +290,7 @@ function App() {
             path="/product/:id"
             element={
               <PrivateRoute>
-                <ProductDetails
-                  product={products[0]}
-                  onAddToCart={addToCart}
-                />
+                <ProductDetails product={products[0]} onAddToCart={addToCart} />
               </PrivateRoute>
             }
           />

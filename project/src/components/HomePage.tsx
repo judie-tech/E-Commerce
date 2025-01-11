@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Play, ChevronRight, Dumbbell, Heart, Timer } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { motion } from "framer-motion";
+import { Play, ChevronRight, Dumbbell, Heart, Timer } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function HomePage() {
   return (
@@ -23,10 +23,14 @@ export function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">Transform Your Life</h1>
-            <p className="text-xl md:text-2xl mb-8">Premium fitness gear for your journey</p>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              Transform Your Life
+            </h1>
+            <p className="text-xl md:text-2xl mb-8">
+              Premium fitness gear for your journey
+            </p>
             <Link
-              to="/shop"
+              to="/login"
               className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Shop Now <ChevronRight />
@@ -44,15 +48,31 @@ export function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose FitGear?</h2>
-            <p className="text-xl text-gray-600">Experience the difference with premium fitness equipment</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Why Choose FitGear?
+            </h2>
+            <p className="text-xl text-gray-600">
+              Experience the difference with premium fitness equipment
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { icon: Dumbbell, title: 'Premium Equipment', desc: 'High-quality gear for optimal performance' },
-              { icon: Heart, title: 'Expert Selection', desc: 'Carefully curated products by fitness experts' },
-              { icon: Timer, title: 'Fast Delivery', desc: 'Quick shipping to your doorstep' }
+              {
+                icon: Dumbbell,
+                title: "Premium Equipment",
+                desc: "High-quality gear for optimal performance",
+              },
+              {
+                icon: Heart,
+                title: "Expert Selection",
+                desc: "Carefully curated products by fitness experts",
+              },
+              {
+                icon: Timer,
+                title: "Fast Delivery",
+                desc: "Quick shipping to your doorstep",
+              },
             ].map((feature, index) => (
               <motion.div
                 key={index}
@@ -81,27 +101,34 @@ export function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
-            <p className="text-xl text-gray-600">Discover our most popular items</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Featured Products
+            </h2>
+            <p className="text-xl text-gray-600">
+              Discover our most popular items
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
-                title: 'Premium Training Shoes',
-                price: '$129.99'
+                image:
+                  "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+                title: "Premium Training Shoes",
+                price: "$129.99",
               },
               {
-                image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61',
-                title: 'Adjustable Dumbbell Set',
-                price: '$299.99'
+                image:
+                  "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61",
+                title: "Adjustable Dumbbell Set",
+                price: "$299.99",
               },
               {
-                image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f',
-                title: 'Premium Yoga Mat',
-                price: '$49.99'
-              }
+                image:
+                  "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f",
+                title: "Premium Yoga Mat",
+                price: "$49.99",
+              },
             ].map((product, index) => (
               <motion.div
                 key={index}
@@ -111,9 +138,15 @@ export function HomePage() {
                 whileHover={{ scale: 1.05 }}
                 className="bg-white rounded-lg shadow-md overflow-hidden"
               >
-                <img src={product.image} alt={product.title} className="w-full h-64 object-cover" />
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-64 object-cover"
+                />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
+                  <h3 className="text-xl font-semibold mb-2">
+                    {product.title}
+                  </h3>
                   <p className="text-blue-600 font-bold">{product.price}</p>
                 </div>
               </motion.div>

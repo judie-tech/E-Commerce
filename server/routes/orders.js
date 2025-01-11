@@ -1,12 +1,12 @@
 import express from "express";
-import { auth } from "../middleware/auth.js";
+import { authMiddleware } from "../middleware/auth.js";
 import Order from "../models/Order.js";
 import { sendOrderConfirmation } from "../utils/email.js";
 
 const router = express.Router();
 
 // Get user's orders
-router.get("/", auth, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.userId })
       .populate("items.product")
@@ -19,7 +19,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // Create order
-router.post("/", auth, async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const order = new Order({
       user: req.user.userId,

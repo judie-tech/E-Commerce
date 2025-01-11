@@ -1,11 +1,11 @@
 import express from "express";
-import { auth } from "../middleware/auth.js";
+import { authMiddleware } from "../middleware/auth.js";
 import Wishlist from "../models/Wishlist.js";
 
 const router = express.Router();
 
 // Get user's wishlist
-router.get("/", auth, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     let wishlist = await Wishlist.findOne({ user: req.user.userId }).populate(
       "products"
@@ -22,7 +22,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // Add product to wishlist
-router.post("/:productId", auth, async (req, res) => {
+router.post("/:productId", authMiddleware, async (req, res) => {
   try {
     let wishlist = await Wishlist.findOne({ user: req.user.userId });
     if (!wishlist) {
@@ -42,7 +42,7 @@ router.post("/:productId", auth, async (req, res) => {
 });
 
 // Remove product from wishlist
-router.delete("/:productId", auth, async (req, res) => {
+router.delete("/:productId", authMiddleware, async (req, res) => {
   try {
     const wishlist = await Wishlist.findOne({ user: req.user.userId });
     if (!wishlist) {
